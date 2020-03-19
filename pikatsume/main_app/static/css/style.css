@@ -1,0 +1,58 @@
+/* GLOBAL */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    font-family: 'Spartan', sans-serif;
+  }
+main {
+  flex: 1 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+h1,h2,h3,h4,h5 {
+  font-weight: 900;
+  font-family: 'Mouse Memoirs', sans-serif;
+  letter-spacing: 3px;
+}
+a:link, a:visited {
+  color: #333;
+}
+a:hover {
+  color: goldenrod;
+}
+footer {
+  padding-top: 0;
+  text-align: right;
+}
+nav {
+  background-color: #fdd835;
+}
+
+/* Materialize Overrides */
+nav .brand-logo {
+  margin-left: 2em;
+}
+nav .right {
+  margin-right: 2em;
+}
+.container {
+  width: 95%;
+  font-size: 1.3em;
+}
+.card {
+  width: 500px;
+  border: 3px solid #ffffff;
+  border-radius: 10px;
+}
+.card img {
+  padding: 10px;
+}
+.bold {
+  font-weight: 900;
+}
+ul.pika-list {
+  margin-top: 0;
+}
+.pika-list li {
+  margin-left: 20px;
+}
