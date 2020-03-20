@@ -120,4 +120,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/pikabase/'
-LOGOUT_REDIRECT_URL = '/pikabase/'
+LOGOUT_REDIRECT_URL = '/'

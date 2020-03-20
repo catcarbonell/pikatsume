@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
@@ -16,7 +15,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('pikabase')
+            return redirect('pikabase/index.html')
         else:
             error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
@@ -24,7 +23,7 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 def home(request):
-    return HttpResponse('<h1>Pika! (o^.^o)</h1>')
+    return render(request, 'home.html')
 
 def about(request):
     return  render(request, 'about.html')
@@ -46,3 +45,9 @@ def new_pika(request):
         new_form = PikaForm()
         context = {  'new_form' : new_form  }
         return render(request, 'pikabase/pika_form.html', context)
+
+@login_required
+def update_profile(request, user_id):
+    user = User.objects.get(pk=user_id)
+    user.save()
+    return redirect ('profile.html')
