@@ -4,7 +4,9 @@ from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Pika, Ptype
+from django.db import transaction
+from django.dispatch import receiver
+from .models import Pika, Ptype, Profile
 from .forms import PikaForm
 # Create your views here.
 
@@ -15,7 +17,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect('pikabase/index.html')
+            return redirect('profile')
         else:
             error_message = 'Invalid sign up - try again'
     form = UserCreationForm()
@@ -23,14 +25,18 @@ def signup(request):
     return render(request, 'registration/signup.html', context)
 
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'home')
 
 def about(request):
-    return  render(request, 'about.html')
+    return  render(request, 'about')
 
 def pikabase_index(request):
     pikas = Pika.objects.all()
     return  render(request, 'pikabase/index.html', { 'pikas': pikas })
+
+@login_required
+def profile(request):
+    return render(request, 'accounts/profile')
 
 @login_required
 def new_pika(request):
@@ -47,7 +53,13 @@ def new_pika(request):
         return render(request, 'pikabase/pika_form.html', context)
 
 @login_required
-def update_profile(request, user_id):
-    user = User.objects.get(pk=user_id)
-    user.save()
-    return redirect ('profile.html')
+@transaction.atomic
+def update_profile(request):
+    if request.method == 'POST':
+        profile_form = ProfileForm(request.POST, instance=request.user.profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('profile.html')
+    else:
+        profile_form = ProfileForm(instance=request.user.profile)
+        return render(request, 'profile.html', {'profile_form': profile_form})
