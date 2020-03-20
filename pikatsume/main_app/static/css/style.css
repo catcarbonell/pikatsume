@@ -1,9 +1,9 @@
 /* GLOBAL */
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-    font-family: 'Spartan', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  font-family: 'Inter', sans-serif;
   }
 main {
   flex: 1 0 auto;
@@ -27,7 +27,6 @@ footer {
 nav {
   background-color: #fdd835;
 }
-
 /* Materialize Overrides */
 nav .brand-logo {
   margin-left: 2em;
@@ -41,8 +40,11 @@ nav .right {
 }
 .card {
   width: 500px;
-  border: 3px solid #ffffff;
+  border: 7px solid gold;
   border-radius: 10px;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
 }
 .card img {
   padding: 10px;
@@ -55,4 +57,30 @@ ul.pika-list {
 }
 .pika-list li {
   margin-left: 20px;
+}
+.pika-list span {
+  color: goldenrod;
+}
+
+/* Card Flip */
+.scene {
+  width: 200px;
+  height: 260px;
+  perspective: 600px;
+}
+.card__face {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  backface-visibility: hidden;
+}
+.card__face--front {
+  background: red;
+}
+.card__face--back {
+  background: blue;
+  transform: rotateY( 180deg );
+}
+.card.is-flipped {
+  transform: rotateY(180deg);
 }
